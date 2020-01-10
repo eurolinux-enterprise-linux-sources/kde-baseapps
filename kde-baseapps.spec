@@ -1,10 +1,10 @@
 Name:    kde-baseapps
-Summary: KDE Core Applications 
+Summary: KDE Core Applications
 Version: 4.10.5
-Release: 4%{?dist}
+Release: 6%{?dist}
 
 License: GPLv2
-URL:     https://projects.kde.org/projects/kde/kde-baseapps 
+URL:     https://projects.kde.org/projects/kde/kde-baseapps
 %global revision %(echo %{version} | cut -d. -f3)
 %if %{revision} >= 50
 %global stable unstable
@@ -32,6 +32,9 @@ Patch5: kde-baseapps-4.9.2-konqueror-mimetyp.patch
 
 Patch6: kde-baseapps-4.10.5-remove-env-shebang.patch
 
+# Bug 1344052 - Drop functionality doesn't work on .desktop files
+Patch7: kde-baseapps-allow-to-drop-files-on-readonly-desktop-files.patch
+
 ## upstream patches
 
 %ifnarch s390 s390x
@@ -48,10 +51,10 @@ Provides:  kdebase4 = %{version}-%{release}
 
 Obsoletes: d3lphin
 Obsoletes: dolphin < 1.0.2-1
-Provides:  dolphin = %{version}-%{release} 
+Provides:  dolphin = %{version}-%{release}
 
 Obsoletes: kde-plasma-folderview < 6:4.3.1-1
-Provides:  kde-plasma-folderview = %{?epoch:%{epoch}:}%{version}-%{release} 
+Provides:  kde-plasma-folderview = %{?epoch:%{epoch}:}%{version}-%{release}
 
 Obsoletes: konq-plugins < 4.6.80-1
 Provides:  konq-plugins = %{version}-%{release}
@@ -70,7 +73,7 @@ BuildRequires: pkgconfig
 BuildRequires: pkgconfig(glib-2.0)
 BuildRequires: pkgconfig(libstreams)
 
-Requires: kde-runtime%{?_kde4_version: >= %{_kde4_version}}
+Requires: kde-runtime >= %{version}
 # for upgrade path, when konsole, kwrite were split out since 4.7.90
 # remove unconditional or f18+ only? (bug #834137)  -- rex
 %if 0%{?fedora} < 17 && 0%{?rhel} < 7
@@ -126,6 +129,7 @@ Requires: kdelibs4-devel
 %patch4 -p2 -b .bz#631481
 %patch5 -p1 -b .mimetyp.patch
 %patch6 -p1 -b .remove-env-shebang
+%patch7 -p1 -b .allow-to-drop-files-on-readonly-desktop-files
 
 %build
 mkdir -p %{_target_platform}
@@ -143,7 +147,7 @@ make install/fast DESTDIR=%{buildroot} -C %{_target_platform}
 # konquerorsu only show in KDE
 echo 'OnlyShowIn=KDE;' >> %{buildroot}%{_kde4_datadir}/applications/kde4/konquerorsu.desktop
 
-# create/own some dirs 
+# create/own some dirs
 mkdir -p %{buildroot}%{_kde4_appsdir}/konqueror/{kpartplugins,icons,opensearch}
 
 ## unpackaged files
@@ -283,6 +287,14 @@ fi
 
 
 %changelog
+* Tue Oct 17 2017 Jan Grulich <jgrulich@redhat.com>
+- Require same version of kde-runtime as kde-baseapps
+  Resolves: bz#1503023
+
+* Mon Oct 16 2017 Jan Grulich <jgrulich@redhat.com>
+- Allow to drop files on readonly desktop files
+  Resolves: bz#1344052
+
 * Tue Jan 28 2014 Daniel Mach <dmach@redhat.com> - 4.10.5-4
 - Mass rebuild 2014-01-24
 
@@ -451,7 +463,7 @@ fi
 - 4.7.0
 
 * Fri Jul 22 2011 Rex Dieter <rdieter@fedoraproject.org> 6:4.6.95-11
-- Requires: konsole kwrite, for upgrade path 
+- Requires: konsole kwrite, for upgrade path
 
 * Thu Jul 21 2011 Rex Dieter <rdieter@fedoraproject.org> 6:4.6.95-10
 - drop kate, konsole, to be packaged separately.
@@ -650,7 +662,7 @@ fi
 * Sun Sep 27 2009 Rex Dieter <rdieter@fedoraproject.org> - 4.3.1-3
 - own %%_kde4_appsdir/konqueror/{kpartplugins,icons,opensearch}
 - %%lang'ify HTML docs
-- Provides: kdelibs4%%{?_isa} 
+- Provides: kdelibs4%%{?_isa}
 
 * Wed Sep  2 2009 Lukáš Tinkl <ltinkl@redhat.com> - 4.3.1-2
 - fix context menus in Konsole (kdebug:186745)

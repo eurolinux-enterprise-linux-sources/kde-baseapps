@@ -1,0 +1,13 @@
+diff --git a/dolphin/src/views/draganddrophelper.cpp b/dolphin/src/views/draganddrophelper.cpp
+index f81d4d0..c9c847a 100644
+--- a/dolphin/src/views/draganddrophelper.cpp
++++ b/dolphin/src/views/draganddrophelper.cpp
+@@ -30,7 +30,7 @@
+
+ QString DragAndDropHelper::dropUrls(const KFileItem& destItem, const KUrl& destUrl, QDropEvent* event)
+ {
+-    if (!destItem.isNull() && !destItem.isWritable()) {
++    if (!destItem.isNull() && (!destItem.isWritable() && !destItem.isDesktopFile())) {
+         return i18nc("@info:status", "Access denied. Could not write to <filename>%1</filename>", destUrl.pathOrUrl());
+     }
+
