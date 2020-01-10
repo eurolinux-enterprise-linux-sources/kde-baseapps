@@ -1,7 +1,7 @@
 Name:    kde-baseapps
 Summary: KDE Core Applications 
 Version: 4.10.5
-Release: 1%{?dist}
+Release: 4%{?dist}
 
 License: GPLv2
 URL:     https://projects.kde.org/projects/kde/kde-baseapps 
@@ -29,6 +29,8 @@ Patch4: kdebase-4.3.4-bz#609039-chfn-parse.patch
 # add x-scheme-handler/http for konqueror so it can be set
 # as default browser in GNOME
 Patch5: kde-baseapps-4.9.2-konqueror-mimetyp.patch
+
+Patch6: kde-baseapps-4.10.5-remove-env-shebang.patch
 
 ## upstream patches
 
@@ -123,7 +125,7 @@ Requires: kdelibs4-devel
 %patch3 -p2 -b .kde#228593
 %patch4 -p2 -b .bz#631481
 %patch5 -p1 -b .mimetyp.patch
-
+%patch6 -p1 -b .remove-env-shebang
 
 %build
 mkdir -p %{_target_platform}
@@ -281,6 +283,15 @@ fi
 
 
 %changelog
+* Tue Jan 28 2014 Daniel Mach <dmach@redhat.com> - 4.10.5-4
+- Mass rebuild 2014-01-24
+
+* Mon Jan 13 2014 Jan Grulich <jgrulich@redhat.com> - 4.10.5-3
+- Do not use shebang with env (#987023)
+
+* Fri Dec 27 2013 Daniel Mach <dmach@redhat.com> - 4.10.5-2
+- Mass rebuild 2013-12-27
+
 * Sun Jun 30 2013 Than Ngo <than@redhat.com> - 4.10.5-1
 - 4.10.5
 

@@ -1,0 +1,19 @@
+diff -upr kde-baseapps-4.10.5/dolphin/src/settings/services/servicemenudeinstallation kde-baseapps-4.10.5_fixed/dolphin/src/settings/services/servicemenudeinstallation
+--- kde-baseapps-4.10.5/dolphin/src/settings/services/servicemenudeinstallation	2013-06-28 19:13:51.560229082 +0200
++++ kde-baseapps-4.10.5_fixed/dolphin/src/settings/services/servicemenudeinstallation	2014-01-13 11:02:34.955052208 +0100
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env ruby
++#!/usr/bin/ruby
+ require 'fileutils'
+ archive = ARGV[0]
+ if archive[(archive.length - 8)..(archive.length)] == ".desktop"
+diff -upr kde-baseapps-4.10.5/dolphin/src/settings/services/servicemenuinstallation kde-baseapps-4.10.5_fixed/dolphin/src/settings/services/servicemenuinstallation
+--- kde-baseapps-4.10.5/dolphin/src/settings/services/servicemenuinstallation	2013-06-28 19:13:51.560229082 +0200
++++ kde-baseapps-4.10.5_fixed/dolphin/src/settings/services/servicemenuinstallation	2014-01-13 11:02:34.956052211 +0100
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env ruby
++#!/usr/bin/ruby
+ require 'pathname'
+ require 'fileutils'
+ archive = ARGV[0]
+
